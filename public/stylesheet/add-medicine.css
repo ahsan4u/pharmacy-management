@@ -1,0 +1,124 @@
+body {
+    background: url(../img/Coexist.jpeg);
+    background-size: 100% 100%;
+    /* background-color: rgb(11, 16, 19); */
+}
+
+.container {
+    margin: 50px auto;
+    display: flex;
+    width: 60vw;
+    height: 75vh;
+    background-color: rgba(8, 6, 2, 0.733);
+    box-shadow: 2px 2px 10px rgb(73, 61, 83);
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.videoTemp {
+    width:50%;
+    height: 100%;
+    overflow: hidden;
+    border-right: none;
+}
+
+video {
+    width: 100%;
+    position: relative;
+    top: -110px;
+}
+
+.content {
+    width: 50%;
+    background-color: black;
+}
+
+.container h1 {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 30px;
+    color: rgb(203, 255, 82);
+}
+
+input {
+    display: block;
+    width: 70%; height: 45px;
+    border: none; border-radius: 15px;
+    background-color: transparent;
+    border: 1px solid rgb(71, 71, 253);
+    box-shadow: 0 0 10px rgb(28, 28, 167);
+    margin: 20px auto;
+    padding-left: 10px;
+    font-size: 18px;
+    color: white;
+    outline: none;
+}
+
+.priceQty {
+    display: flex;
+    width: 70%;
+    margin: auto;
+    justify-content: space-between;
+}
+
+.priceQty input {
+    width: 49%;
+    margin: 0;
+}
+
+.expDate {
+    width: 70%;
+    padding-left: 26px;
+    display: block;
+    margin: 20px auto;
+    border-radius: 15px;
+    background-color: rgba(8, 6, 2, 0.733);
+    box-shadow: 0 0 10px rgb(17, 1, 75);
+    border: 1px solid rgb(71, 71, 253);
+}
+
+.expDate label {
+    font-size: 18px;
+    color: white;
+}
+
+.expDate input {
+    display: inline-block;
+    margin: 0;
+    width: 60%;
+    margin-left: 10px;
+    box-shadow: none;
+    border: none;
+    background-color: transparent;
+}
+
+.buttons {
+    width: 70%;
+    margin: auto;
+}
+
+.buttons input {
+    width: 100%;
+    margin: auto;
+    box-shadow: none;
+    padding-right: 10px;
+    color: black;
+    font-weight: bold;
+    background-color: rgb(2, 206, 46);
+    box-shadow: 2px 4px 10px rgb(6, 100, 19);
+    border: none;
+    width: 100%; height: 45px;
+    border-radius: 8px;
+}
+
+.buttons input:active { box-shadow: none; }
+
+.msg, .msg span {
+    margin-top: 20px;
+    color: rgb(5, 211, 5);
+    text-align: center;
+}
+
+.msg span {
+    color: red;
+}

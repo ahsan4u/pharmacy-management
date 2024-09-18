@@ -1,0 +1,42 @@
+{{>top}}
+    <link rel="stylesheet" href="/stylesheet/sale.css">
+    <style>.navbar ul a[href='/sale'] { background-color: #292e2d; box-shadow: inset 0 0 15px black; }</style>
+</head>
+<body>
+    {{>navbar}}
+    <div class="container">
+        <div class="search-input">
+            <ul class="SaleSearchSuggest">
+                <div class="forFlex">
+                    <label for="username" class="name">Name: 
+                    <input type="text" name="" id="username" autocomplete="off"></label>
+                    <div>
+                        <input type="text" class="saleSearch" oninput="saleSearch(this);" name="search" placeholder="Type to Search..." autocomplete="off">
+                        <button>Search</button>
+                    </div>
+                </div>
+            </ul>
+            <div class="sugestionLiContainer"></div>
+        </div>
+
+        <form action="" onclick="removeSuggest()">
+            <table class="itemsContainer">
+                <tr>
+                    <th colspan="2">Name</th>
+                    <th>MRP</th>
+                    <th>QTY</th>
+                    <th>Discount</th>
+                    <th colspan="2">Amount</th>
+                </tr>
+                
+            </table>
+        </form>
+        <div class="total">
+            <p>Total <span class="totalAmt">0₹</span></p>
+            <label for="given">Given amount<input type="text" name="given" id="given" value="0" autocomplete="off"></label>
+            <button onclick="submit()">Submit</button>
+        </div>
+    </div>
+    <script src="/scripts/sale.js"></script>
+</body>
+</html>

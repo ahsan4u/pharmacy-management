@@ -1,0 +1,78 @@
+@font-face {
+    font-family: headerFont;
+    src: url(../Font/coffee.ttf);
+}
+@font-face {
+    font-family: contentFont;
+    src: url(../Font/merriweather.ttf);
+}
+
+@font-face {
+    font-family: headingFont;
+    src: url(../Font/pantonH.ttf);
+}
+
+body::-webkit-scrollbar {
+    width: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: contentFont;
+    user-select: none;
+}
+
+body {
+    min-height: 100vh;
+    background: rgb(20, 24, 27);
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background-color: #000000;
+    height: 50px;
+}
+
+.navbar h1 {
+    padding: 12px 0;
+    font-size: 30px;
+    font-family: headerFont;
+    color: rgb(104, 255, 252);
+}
+
+.navbar div { display: flex; }
+
+.navbar div img {
+    height: 50px;
+    padding: 6px;
+    filter: brightness(1.5);
+}
+
+.navbar ul {
+    all: unset;
+    display: flex;
+    justify-content: right;
+    width: 550px;
+}
+
+.navbar ul li { 
+    display: inline-block;
+}
+
+.navbar ul a {
+    all: unset;
+    display: block;
+    padding: 15px 14px;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+.navbar ul a:hover {
+    background-color: #292e2d;
+    box-shadow: inset 0 0 15px black;
+}

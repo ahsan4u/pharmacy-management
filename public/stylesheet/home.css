@@ -1,0 +1,103 @@
+body {
+    background: url(../img/home-bg2.jpg);
+    background-size: 100% 100%;
+}
+
+.rowone {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+    user-select: none;
+}
+
+.shellone, .shelltwo, .shellthree, .shellfour {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    width: 300px;
+    height: 180px;
+    box-shadow: 0 0 3px rgb(57, 71, 61);
+    background-color: #474747dc;
+    border-radius: 15px;
+    padding-top: 50px;
+}
+
+.shellfour .values { color: red; }
+.values {
+    font-size: 40px;
+    font-weight: bold;
+    color: rgb(63, 199, 63);
+}
+
+
+.statment {
+    margin-top: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #03dbbe;
+}
+
+.cellOne p {
+    text-align: center;
+}
+
+.rowtwo {
+    margin-top: 20px;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.rowtwo a {
+    all: unset;
+    cursor: pointer;
+    font-family: headingFont;
+    display: block;
+    width: 400px;
+    height: 140px;
+    border-radius: 15px;
+    box-shadow: 0 0 3px rgb(47, 42, 42);
+    background-color: #474747a9;
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    padding-top: 55px;
+}
+
+.rowthree {
+    margin: auto; margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.rowthree .colone, .rowthree .coltwo {
+    all: unset;
+    cursor: pointer;
+    width: 46%; height: 100px;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: #292929e5;
+    box-shadow: 0 0 3px rgb(55, 49, 49);
+    border-radius: 15px;
+}
+
+.colone p, .coltwo p{
+    font-size: 22px;
+    color: rgb(178, 209, 1);
+    font-weight: bolder;
+}
+
+.colone div .name, .coltwo div .name {
+    font-size: 20px;
+    color: #02d1b5;
+}
+
+.colone div .exp, .colone div .qty, .coltwo div .qty {
+    font-size: 15px;
+}
+
+.colone div .exp span, .coltwo div .qty span { color: red; }
+.colone div .qty span { color: #02d1b5; }

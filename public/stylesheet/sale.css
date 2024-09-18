@@ -1,0 +1,206 @@
+body {
+    background: url(../img/saleBg.png);
+    background-size: 100% 100%;
+}
+
+.search-input ul .forFlex {
+    width: 100%;
+    margin-top: 10px;
+    padding-left: 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    background-color: rgb(36, 36, 36);
+    align-items: center;
+    border-radius: 27px 27px 0 0;
+}
+
+
+.name {
+    font-size: 18px;
+    color: white;
+}
+#username {
+    color: white;
+    border: none;
+    height: 35px;
+    border-radius: 5px;
+    background-color: #272d39;
+    font-size: 18px;
+    outline: none;
+    padding-left: 10px;
+    margin-left: 8px;
+}
+#name::placeholder {color: white;}
+
+.search-input .SaleSearchSuggest {
+    position: relative; left: 565px;
+    width: 780px;
+    border-radius: 30px 30px 0 0;
+    overflow: hidden;
+    list-style: none;
+}
+
+.sugestionLiContainer {
+    display: inline;
+    position: absolute;
+    left: 65vw;
+    top: 112px;
+    z-index: 999;
+    border-radius: 0 0 15px 15px;
+    overflow: hidden;
+}
+.sugestionLiContainer li {
+    list-style: none;
+    width: 450px;
+    color: white;
+    background-color: #272d39;
+    padding: 8px;
+    padding-left: 22px;
+    box-shadow: inset 0 0 2px gray;
+}
+
+.sugestionLiContainer li:hover {
+    background-color: rgb(94, 93, 93);
+}
+
+.search-input ul div div {
+    width: 100%; height: 53px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}   
+
+.search-input ul div .saleSearch {
+    border: none;
+    width: 75%; height: 100%;
+    background-color: transparent;
+    font-size: 17px;
+    padding-left: 20px;
+    outline: none;
+    border-radius: 15px;
+    color: white;
+}
+.search-input ul div input::placeholder { color: white; }
+
+.search-input div button {
+    background-color: rgb(252, 250, 252);
+    border: none;
+    border-radius: 30px 35px 0 30px;
+    height: 76%;
+    margin-right: 7px;
+    width: 24%;
+    font-size: 18px;
+}
+
+.container form {
+    width: 780px;
+    min-height: 300px;
+    max-height: 70vh;
+    overflow: auto;
+    position: relative; left: 565px;
+    background-color: rgb(40, 40, 40);
+}
+.container form::-webkit-scrollbar { width: 0; }
+
+table {
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+form table th {
+    background-color: rgb(18, 18, 18);
+    padding: 8px 6px;
+    color: white;
+}
+form table th:last-child {
+    margin-left: 80px;
+}
+
+form table tr td:first-child input { width: 300px; }
+
+form table tr td input {
+    margin: 10px 0;
+    border: none; width: 100%;
+    color: white;
+    background-color: transparent;
+    text-align: center;
+    font-size: 14px;
+    outline: none;
+}
+
+form table tr td {
+    border-bottom: 1px dotted rgb(58, 58, 58);
+    padding: 0 6px;
+}
+
+form table tr td:last-child input {
+    margin-right: 4px;
+    font-size: 19px;
+    border-radius: 3px;
+    width: 20px;
+    cursor: pointer;
+}
+form table tr td:last-child input:hover { background-color: rgb(254, 129, 129); }
+form table tr td:nth-child(5) input {margin-left: 10px;}
+.total {
+    display: flex;
+    width: 780px;
+    position: relative; left: 565px;
+    border-radius: 0 0 15px 15px;
+    justify-content: space-between;
+    justify-items: center;
+    align-items: center;
+    background: rgb(18, 18, 18);
+    padding: 4px 0;
+}
+
+.total p, .total label {
+    display: block;
+    font-size: 18;
+    font-family: headingFont;
+    color: white;
+}
+
+.total p { margin-left: 50px; }
+
+.total p span {
+    display: inline-block;
+    background-color: #272d39;
+    padding: 7px 0;
+    width: 120px;
+    text-align: center;
+    border-radius: 10px;
+    margin-left: 10px;
+    font-size: 18px;
+}   
+
+.total label input {
+    background-color: #272d39;
+    width: 120px; height: 37px;
+    border: none;
+    border-radius: 10px;
+    margin-left: 10px;
+    font-size: 18px;
+    color: white;
+    outline: none;
+    text-align: center;
+    margin-right: 50px;
+}
+
+.total button {
+    width: 100px; height: 38px;
+    background-color: rgb(2, 174, 174);
+    border-radius: 10px;
+    font-size: 16px;
+    margin-right: 4px;
+    border: none;
+    display: none;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.total button:hover {
+    background-color: rgb(3, 203, 203);
+}

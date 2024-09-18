@@ -1,0 +1,18 @@
+const mongoose = require('mongoose');
+
+const Bills = mongoose.model('bills', mongoose.Schema({
+    username:{type: String},
+    totalAmount: {type: String},
+    pendingAmount: {type: String},
+    products: []
+}));
+
+const Medicines = mongoose.model('medicines', mongoose.Schema({
+    name: {type: String, required: true},
+    formula: {type: String, required: true},
+    price: {type: String, required: true},
+    qty: {type: String, required: true},
+    exp: {type: Date, required: true}
+}));
+
+module.exports = {Medicines, Bills};

@@ -1,0 +1,53 @@
+{{>top}}
+    <link rel="stylesheet" href="/stylesheet/home.css">
+    <style>.navbar ul a[href='/'] { background-color: #292e2d; box-shadow: inset 0 0 15px black; }</style>
+</head>
+<body>
+    {{>navbar}}
+    <div class="rowone">
+        <div class="shellone">
+            <p class="values">1,547₹</p>
+            <p class="statment">Today Profit</p>
+        </div>
+
+        <div class="shelltwo">
+            <p class="values">27,225₹</p>
+            <p class="statment">Monthly Profit</p>
+        </div>
+
+        <div class="shellthree">
+            <p class="values">3,5,342₹</p>
+            <p class="statment">Yearly Profit</p>
+        </div>
+
+        <div class="shellfour">
+            <p class="values">9,430₹</p>
+            <p class="statment">Pending Payment</p>
+        </div>
+    </div> {{!-- rowone --}}
+
+    <div class="rowtwo">
+        <a href="/add-medicine">Add <br>Medicines</a>
+        <a href="/">Previous Amount <br>Settlement</a>
+        <a href="/sale">Generate <br>Bill</a>
+    </div> {{!-- rowtwo --}}
+
+    <div class="rowthree">
+        <a href="/" class="colone">
+            <p>Closest Expiry Medicine:</p>
+            <div>
+                <p class="name">Zerodol SP</p>
+                <p class="exp">EXP: <span>26-10-2024</span></p>
+                <p class="qty">QTY: <span>36</span></p>
+            </div>
+        </a>
+        <a href="/" class="coltwo">
+            <p>Restock Medicine Alert:</p>
+            <div>
+                <p class="name">Naproxen</p>
+                <p class="qty">QTY: <span>04</span></p>
+            </div>
+        </a>
+    </div> {{!-- rowthree --}}
+</body>
+</html>
