@@ -1,3 +1,28 @@
+.movesearchright {
+    display: flex; justify-content: flex-end;
+}
+
+.searchbar {
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 0 10px;
+    width: 350px;
+    margin: 20px 50px 0 0;
+    background-color: rgb(74, 66, 108);
+}
+
+.searchbar #search {
+    width: 75%; height: 40px;
+    margin: 10px 0;
+    outline: none;
+    padding-left: 5px;
+    font-size: 18px;
+}
+
+.searchbar button {
+    width: 24%; height: 64%;
+}
+
 .container {
     padding: 0 20px;
     display: grid;
@@ -13,7 +38,7 @@
 .card {
     background: url('../img/card.png');
     background-size: 100% 100%;
-    width: 380px; height: 240px;
+    width: 380px; min-height: 220px;
     padding: 10px 0;
     margin-top: 20px;
     border: 1px solid gray;
@@ -21,17 +46,17 @@
 }
 
 .content {
-    margin-top: 40px;
+    margin-top: 20px;
+    transform: skew(-14deg);
 }
 
 .content .row {
-    margin-bottom: 10px;
+    margin-bottom: 5px;
 }
 
 .content .row p {
     font-size: 14px;
-    width: 140px;
-    font-size: 13px;
+    width: 150px;
 }
 
 .card .name{
@@ -44,8 +69,6 @@
     text-align: center;
 }
 
-
-
 .content .row {
     display: flex;
 }
@@ -54,26 +77,15 @@
     font-weight: bold;
     width: 80px;
     font-size: 16px;
+    margin-left: 10px;
 }
 
 .content .row p:last-child {
     color: rgb(1, 74, 83);
     margin-top: 2px;
-}
-
-.exp p {
-    color: rgb(1, 74, 83);
-    margin-top: 2px;
     font-size: 13px;
-    width: 150px;
-    font-weight: lighter;
-    margin-left: 10px;
 }
 
-.three {
-    margin-left: -15px;
-    display: flex;
-    align-items: center;
-    font-weight: bold;
-    font-size: 16px;
+.content .row:nth-child(2) p:last-child, .content .row:first-child p:last-child {
+    font-size: 14px;
 }
