@@ -3,28 +3,32 @@
 }
 
 .searchbar {
-    border-radius: 10px;
-    overflow: hidden;
-    padding: 0 10px;
-    width: 350px;
-    margin: 20px 50px 0 0;
-    background-color: rgb(74, 66, 108);
+    width: 470px;
+    margin: 15px 10px 15px 0;
 }
 
 .searchbar #search {
-    width: 75%; height: 40px;
-    margin: 10px 0;
+    width: 78%; height: 40px;
     outline: none;
-    padding-left: 5px;
+    padding-left: 20px;
     font-size: 18px;
+    background-color: rgb(52, 49, 49);
+    color: white;
+    border: none;
+    border-radius: 20px;
 }
 
 .searchbar button {
-    width: 24%; height: 64%;
+    width: 21%; height: 100%;
+    color: white;
+    background-color: rgb(63, 63, 255);
+    border: none;
+    font-size: 15px;
+    border-radius: 20px;
 }
 
 .container {
-    padding: 0 20px;
+    padding: 0 25px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-items: center;
@@ -38,16 +42,15 @@
 .card {
     background: url('../img/card.png');
     background-size: 100% 100%;
-    width: 380px; min-height: 220px;
+    width: 380px; min-height: 170px;
     padding: 10px 0;
-    margin-top: 20px;
+    margin-bottom: 20px;
     border: 1px solid gray;
     border-radius: 10px;
 }
 
 .content {
-    margin-top: 20px;
-    transform: skew(-14deg);
+    transform: skew(-18deg);
 }
 
 .content .row {
@@ -56,14 +59,14 @@
 
 .content .row p {
     font-size: 14px;
-    width: 150px;
+    max-width: 160px;
 }
 
 .card .name{
+    transform: skew(-14deg);
     margin-top: 10px;
     width: 44%;
-    height: 50px;
-    font-size: 20px;
+    font-size: 16px;
     color: blue;
     font-weight: bold;
     text-align: center;
@@ -75,15 +78,16 @@
 
 .content .row p:first-child {
     font-weight: bold;
-    width: 80px;
-    font-size: 16px;
-    margin-left: 10px;
+    width: 68px;
+    font-size: 14px;
 }
 
 .content .row p:last-child {
     color: rgb(1, 74, 83);
+    font-weight: bold;
     margin-top: 2px;
     font-size: 13px;
+    min-width: 135px;   
 }
 
 .content .row:nth-child(2) p:last-child, .content .row:first-child p:last-child {

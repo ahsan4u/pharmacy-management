@@ -6,44 +6,12 @@
 {{>navbar}}
     <div class="movesearchright">
     <div class="searchbar">
-        <input type="text" name="search" id="search" oninput="searchmed()">
-        <button onclick="changetext()">Name</button>
+        <input type="text" name="search" id="search" oninput="searchmed()" placeholder="Search Medicine">
+        <button onclick="btnText()">Name</button>
     </div>
     </div>
-    
-    <div class="container">
-        <div class="card">
-            <p class="name">Zerodol-SP</p>
-            <div class="forflex">
-                <div class="content">
 
-
-                    <div class="row three">
-                        <p>Quantity:</p>
-                        <p class="total">50</p>
-                    </div>
-
-                    <div class="row two">
-                        <p>Price: </p>
-                        <p class="price">240₹</p>
-                    </div>
-
-                    <div class="row four">
-                        <p>Expiry:</p>
-                        <p class="exp">28/08/2025</p>
-                    </div>
-
-                    <div class="row one">
-                        <p>Formula:</p>
-                        <p class="medname">Paracetamol</p>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-
-        
-    </div>
+    <div class="container"></div>
+    <script src="/scripts/stock.js"></script>
 </body>
 </html>

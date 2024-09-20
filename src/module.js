@@ -7,12 +7,15 @@ const Bills = mongoose.model('bills', mongoose.Schema({
     products: []
 }));
 
+const expirationSchema = new mongoose.Schema({
+    qty: {type: String, required: true},
+    price: {type: String, required: true},
+    exp: {type: Date, required: true}
+});
 const Medicines = mongoose.model('medicines', mongoose.Schema({
     name: {type: String, required: true},
     formula: {type: String, required: true},
-    price: {type: String, required: true},
-    qty: {type: String, required: true},
-    exp: {type: Date, required: true}
+    date: [expirationSchema]
 }));
 
 module.exports = {Medicines, Bills};
