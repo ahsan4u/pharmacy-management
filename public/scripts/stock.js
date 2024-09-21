@@ -1,31 +1,35 @@
-const btn = document.querySelector('button');
+const btn = document.querySelector('.searchbar button');
 const SearchInput = document.querySelector('#search');
 
 function card(name, formula, price, qty, exp) {
+        const obj = { name, formula, exp }
         return `<div class="card">
-            <p class="name">${name}</p>
-            <div class="forflex">
+            <div class = 'space-between'>
+                <p class="name">${name}</p>
+                <button onclick = "deleteData({name: '${name}', price: '${price}', formula: '${formula}', exp: '${exp}'})">Delete</button>
+                <button onclick = "updateData(this, {name: '${name}', formula: '${formula}', exp: '${exp}'})">Edite</button>
+            </div>
+            <div class="flex-end">
                 <div class="content">
-                    <div class="row three">
+                    <div class="row">
                         <p>Quantity:</p>
-                        <p class="total">${qty}</p>
+                        <input type='text' class="qty" value=${qty} disabled>
                     </div>
-
-                    <div class="row two">
+                        
+                    <div class="row">
                         <p>Price: </p>
-                        <p class="price">${price}</p>
+                        <input type='text' class="price" value=${price} disabled>
                     </div>
-
-                    <div class="row four">
+                        
+                    <div class="row">
                         <p>Expiry:</p>
-                        <p class="exp">${exp}</p>
+                        <input type='text' class="exp" value=${exp} disabled>
                     </div>
 
-                    <div class="row one">
+                    <div class="row">
                         <p>Formula:</p>
-                        <p class="formula">${formula}</p>
+                        <p>${formula}</p>
                     </div>
-
                 </div>
             </div>
         </div>`;
@@ -56,4 +60,50 @@ function searchmed() {
             document.querySelector('.container').innerHTML += card(item.name, item.formula, item.price, item.qty, item.exp);
         })
     })
+}
+
+function updateData(btn, medicine) {
+    const card = btn.parentElement.parentElement;
+    const qty = card.querySelector('.qty');
+    const price = card.querySelector('.price');
+
+    if(btn.textContent == 'Edite') {
+        qty.disabled = false;
+        price.disabled = false;
+        btn.textContent = 'Save'
+    } else {
+        qty.disabled = true;
+        price.disabled = true;
+
+        fetch(`/medicine/update`, {
+            method: 'POST',
+            headers: {'Content-Type': 'Application/json'},
+            body: JSON.stringify({ name: medicine.name,
+                formula: medicine.formula,
+                exp: medicine.exp,
+                price: price.value,
+                qty: qty.value
+            })
+        })
+        btn.textContent = 'Edite'
+    }
+}
+
+function deleteData(medicine) {
+    const user = prompt('Are you sure to delete!  press Y for "yes" or anykey for "No"');
+    if(user == 'y' || user == 'Y') {
+        fetch(`/medicine/delete`, {
+            method: 'POST',
+            headers: {'Content-Type': 'Application/json'},
+            body: JSON.stringify({
+                name: medicine.name,
+                formula: medicine.formula,
+                exp: medicine.exp
+            })
+        })
+        .then(()=>{
+            alert(`${medicine.name} Successfully Deleted`);
+            window.location.reload();
+        })
+    }
 }

@@ -10,7 +10,7 @@ const Bills = mongoose.model('bills', mongoose.Schema({
 const expirationSchema = new mongoose.Schema({
     qty: {type: String, required: true},
     price: {type: String, required: true},
-    exp: {type: Date, required: true}
+    exp: {type: String, required: true}
 });
 const Medicines = mongoose.model('medicines', mongoose.Schema({
     name: {type: String, required: true},

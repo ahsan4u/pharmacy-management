@@ -37,7 +37,7 @@ function printItem(e) {
     document.querySelector('.itemsContainer').insertAdjacentHTML('beforeend', `
       <tr class='content'>
       <td colspan="2"><input type="text" id="name" value="${data.name}" disabled></td>
-      <td><input type="text" id="price${trCount}" oninput="discount(${trCount})" value="${data.price}"></td>
+      <td><input type="text" id="price${trCount}" oninput="discount(${trCount})" value="${data.date[0].price}"></td>
       <td><input type="text" id="qty${trCount}" oninput="discount(${trCount})" value="1"></td>
       <td><input type="text" id="discount${trCount}" oninput="discount(${trCount})" value="10%"></td>
       <td><input type="text" id="amount${trCount}" value="" disabled></td>

@@ -34,7 +34,7 @@
     justify-items: center;
 }
 
-.forflex {
+.flex-end  {
     display: flex;
     justify-content: right;
 }
@@ -48,6 +48,12 @@
     border: 1px solid gray;
     border-radius: 10px;
 }
+
+.card .space-between {
+    display: flex;
+    justify-content: space-between;
+}
+
 
 .content {
     transform: skew(-18deg);
@@ -64,16 +70,41 @@
 
 .card .name{
     transform: skew(-14deg);
-    margin-top: 10px;
     width: 44%;
+    margin-top: 10px;
     font-size: 16px;
     color: blue;
     font-weight: bold;
     text-align: center;
 }
+/* * { border: 1px solid black; } */
+
+.card button {
+    border: none;
+    border-radius: 4px;
+    width: 48px; height: 28px;
+    margin-bottom: 15px;
+    bottom: 3px; left: 30px;
+    background-color: rgb(250, 99, 99);
+    position: relative;
+    opacity: 0;
+}
+
+.card button:hover {
+    opacity: 1;
+}
+
+.card button:last-child {
+    background-color: rgb(67, 196, 219);
+    left: -8px; width: 48px;
+}
 
 .content .row {
     display: flex;
+}
+
+.content .qty, .content .price {
+    outline: none;
 }
 
 .content .row p:first-child {

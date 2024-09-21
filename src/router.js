@@ -23,18 +23,17 @@ router.route('/stock').get((req, res)=> {
 function medicineOBJ(medicines) {
     return medicines.flatMap(medicine=> 
     medicine.date.map((date)=> {
-        const exp = new Date(date.exp);
         return {
             name: medicine.name,
             formula: medicine.formula,
             price: date.price,
             qty: date.qty,
-            exp: `${exp.getDate()}/${exp.getMonth()+1}/${exp.getFullYear()}`
+            exp: date.exp
         }
     }));
 }
 
-//4 Find and Print Medicine data 
+//4 Find and Print Medicine data
 router.route('/medicines/:type/:key').get( async (req, res)=> {
     const type = req.params.type;
     const key = req.params.key;
@@ -51,18 +50,47 @@ router.route('/medicines/:type/:key').get( async (req, res)=> {
     }
 })
 
-//5 print Add Medicine page
+// 5 Delete medicine From Stock
+router.route('/medicine/delete').post( async (req, res)=> {
+    try {
+        const body = req.body;
+        const name = body.name;
+        const formula = body.formula;
+        const exp = body.exp;
+        
+        await Medicines.findOneAndUpdate({name, formula}, {$pull: {date: {exp}}});
+        if(result.date.length === 0) {
+            await Medicines.deleteOne({name, formula});
+            console.log('completly Deleted');
+        }
+        res.end();
+        
+    } catch (error) {
+        res.send(error);
+    }
+})
+
+// 6 Edite a Medicine from Stocks
+router.route('/medicine/update').post( async (req, res)=> {
+    const body = req.body;
+    await Medicines.findOneAndUpdate({name: body.name, formula: body.formula},
+        {$set: { "date.$[elem].qty": body.qty, "date.$[elem].price": body.price }},
+        {arrayFilters: [{"elem.exp": body.exp}]});
+    res.end();
+})
+
+//6 print Add Medicine page
 router.route('/add-medicine').get((req, res)=> {
     res.render('add-medicine');
 });
 
 
-//6 print Add Sales Book page
+//7 print Add Sales Book page
 router.route('/sales-book').get((req, res)=> {
     res.render('sales-book');
 });
 
-//7 suggesion Search handler on Sale page
+//8 suggesion Search handler on Sale page
 router.route('/medicines/:key').get(async (req, res) => {
     const key = req.params.key;
     try {
@@ -73,7 +101,7 @@ router.route('/medicines/:key').get(async (req, res) => {
     }
 });
 
-//8 searched item adding
+//9 searched item adding in Bill
 router.route('/items/:key').get( async (req, res)=> {
     let key = req.params.key;
     try {
@@ -84,7 +112,7 @@ router.route('/items/:key').get( async (req, res)=> {
     }   
 })
 
-//9 Upload Bill to database
+//10 Upload Bill to database
 router.route('/upload-bill').post( async (req, res)=> {
     try {
         console.log(req.body);
@@ -100,17 +128,23 @@ router.route('/upload-bill').post( async (req, res)=> {
     }
 })
 
-//10 uploading new Medicine via Add Medicine Page
+//11 uploading new Medicine via Add Medicine Page
 router.route('/add-medicine').post(async (req, res)=> {
     try {
         const body = req.body;
-
-        if(!body) {
+        if(!body.name || !body.formula || !body.qty || !body.expDate || !body.price) {
+            const err = `You Can't leave any cell as empty`;
+            res.render('add-medicine', {err});
             return;
         }
-        const isExist = await Medicines.findOne({name: body.name, formula: body.formula})
+
+        let expDate = new Date(body.expDate);
+        const exp = `${expDate.getDate()}/${expDate.getMonth()+1}/${expDate.getFullYear()}`;
+
+
+        const isExist = await Medicines.findOne({name: body.name, formula: body.formula});
         if(isExist) {
-            isExist.date.push({qty: body.qty, exp: body.expDate, price: body.price});
+            isExist.date.push({qty: body.qty, exp, price: body.price});
             isExist.save();
             res.render('add-medicine', {msg: 'Successfully Added in existing data'});
             return;
@@ -119,17 +153,11 @@ router.route('/add-medicine').post(async (req, res)=> {
         await Medicines.create({
             name: body.name,
             formula: body.formula,
-            date: {
-                qty: body.qty,
-                price: body.price,
-                exp: body.expDate
-            }
+            date: { qty: body.qty, price: body.price, exp }
         })
         res.render('add-medicine', {msg: 'Successfully Added'});
     } catch (error) {
-        const err = `You Can't leave any cell as empty`;
         console.log(error);
-        res.render('add-medicine', {err});
     }    
         
 })
