@@ -1,6 +1,9 @@
-let idx = 1;
+let idx = 0;
 let preIdx = idx;
 const suggestLiCont = document.querySelector('.sugestionLiContainer');
+const msgTag = document.querySelector('.response-msg');
+
+// Show Suggestions just after making any input in Search Bar
 function saleSearch(val) {
   if(val.value) {
     const value = val.value;
@@ -12,40 +15,54 @@ function saleSearch(val) {
     .then((data) => {
       removeSuggest();
       data.forEach((item) => {
-          suggestLiCont.innerHTML += `<li class='suggestLi' onclick=printItem(this)>${item.name}</li>`;
+        suggestLiCont.innerHTML += 
+        `<li class='suggestLi' onclick=printItem(this)>
+          <p id='name'>${item.name}<p id='formula'>${item.formula}</p></p>
+          <p id='exp'>Exp: ${item.exp}</p>
+        </li>`;
       });
     })
     .catch((err) => { console.log('ERR from Sale.js script: error to fetch data', err); });
   } else { removeSuggest(); }
-  idx = 1;
+  msgTag.textContent = ''; // error and successfull msg 
+  msgTag.style.color = 'rgb(22, 255, 65)';
+  idx = 0;
   preIdx = idx;
 }
 
+// Empty the Suggestions li
 function removeSuggest() {
-  suggestLiCont.innerHTML = ''; 
+  suggestLiCont.innerHTML = '';
+  msgTag.textContent = '';
+  msgTag.style.color = 'rgb(22, 255, 65)';
 }
 
+// Adding an Item to the Bill
 function printItem(e) {
-  const value = e.textContent;
-  fetch(`/items/${value}`, {
+  const body = {
+    name: e.querySelector('.suggestLi #name').textContent,
+    formula: e.querySelector('.suggestLi #formula').textContent,
+    exp: e.querySelector('.suggestLi #exp').textContent.replaceAll('/', '-'),
+  }
+  fetch(`/print-item/search/${body.name}/${body.formula}/${body.exp}`, {
     method: 'GET',
-    headers: { 'Content-Type': 'Application/json' }
+    headers: { 'Content-Type': 'Application/json' },
   })
   .then((response) => response.json())
   .then((data) => {
     const trCount = document.querySelector('.itemsContainer').getElementsByTagName('tr').length;
     document.querySelector('.itemsContainer').insertAdjacentHTML('beforeend', `
       <tr class='content'>
-      <td colspan="2"><input type="text" id="name" value="${data.name}" disabled></td>
-      <td><input type="text" id="price${trCount}" oninput="discount(${trCount})" value="${data.date[0].price}"></td>
+      <td colspan="2"><input type="text" id="name" value="${data.name}" disabled><br><p id="formula">${data.formula}<p id="exp" style="display: none">Exp: ${data.exp}</p></p></td>
+      <td><input type="text" id="price${trCount}" oninput="discount(${trCount})" value="${data.price}"></td>
       <td><input type="text" id="qty${trCount}" oninput="discount(${trCount})" value="1"></td>
       <td><input type="text" id="discount${trCount}" oninput="discount(${trCount})" value="10%"></td>
       <td><input type="text" id="amount${trCount}" value="" disabled></td>
       <td onclick="removeItem(this)"><input type="text" value="X"></td>
       </tr>
       `);
-      document.querySelector('.saleSearch').value = '';
-      removeSuggest();
+    document.querySelector('.saleSearch').value = '';
+    removeSuggest();
     discount(trCount);
     totalAmt();
     document.querySelector('form').scrollBy(0, 100);
@@ -54,23 +71,31 @@ function printItem(e) {
   .catch((err) => {
     console.log('fetch error in .catch() that shows', err);
   });
-  idx = 1;
+  idx = 0;
   preIdx = idx;
 }
 
+// selection Movement on sugestion items
 document.querySelector('.saleSearch').onkeyup = (e)=> {
   if(e.key == 'ArrowDown') {
-    document.querySelector(`.sugestionLiContainer li:nth-child(${preIdx})`).style.background = '#272d39';
-    document.querySelector(`.sugestionLiContainer li:nth-child(${idx})`).style.background = 'rgb(94, 93, 93)';
-    preIdx = idx;
+    preIdx = idx == 0? 2: idx;
     idx++;
     if(idx > document.querySelectorAll(`.sugestionLiContainer li`).length) { idx = 1; }
+    document.querySelector(`.sugestionLiContainer li:nth-child(${preIdx})`).style.background = '#272d39';
+    document.querySelector(`.sugestionLiContainer li:nth-child(${idx})`).style.background = 'rgb(94, 93, 93)';
+  } else if(e.key == 'ArrowUp') {
+    preIdx = idx == 0? 2: idx;
+    idx--;
+    if(idx < 1) { idx = document.querySelectorAll(`.sugestionLiContainer li`).length; }
+    document.querySelector(`.sugestionLiContainer li:nth-child(${preIdx})`).style.background = '#272d39';
+    document.querySelector(`.sugestionLiContainer li:nth-child(${idx})`).style.background = 'rgb(94, 93, 93)';
   } else if(e.key == 'Enter') {
-    printItem(document.querySelector(`.sugestionLiContainer li:nth-child(${preIdx})`));
+    printItem(document.querySelector(`.sugestionLiContainer li:nth-child(${idx})`));
   }
   
 }
 
+// Change Amount value by the input of Discount value
 function discount(i) {
   let price = document.getElementById(`price${i}`);
   let discount = document.getElementById(`discount${i}`);
@@ -94,6 +119,7 @@ function discount(i) {
   totalAmt();
 }
   
+// Remove an Items by clicking on X
 function removeItem(e) {
   e.parentNode.remove();
   document.querySelectorAll('.content').forEach((tr, i)=> {
@@ -109,6 +135,7 @@ function removeItem(e) {
   totalAmt();
 }
 
+// Submit button Apear and Hide
 function totalDiv() {
   if(document.querySelector('.itemsContainer').getElementsByTagName('tr').length != 1) {
     setTimeout(()=> { document.querySelector('.total button').style.opacity = '1'; },100);
@@ -119,6 +146,7 @@ function totalDiv() {
   }
 }
 
+// Total Amount for All Medicines
 function totalAmt() {
   let val = 0;
   document.querySelectorAll('.content').forEach((tr)=> {
@@ -128,17 +156,20 @@ function totalAmt() {
   document.querySelector('#given').value = val.toFixed(0);
 }
 
+// Upload Bill to Database
 function submit() {
   const obj = {
     username: document.querySelector('#username').value,
     totalAmt: document.querySelector('.totalAmt').textContent,
-    pendingAmount: document.querySelector('#given').value,
+    pendingAmount: String(Number(document.querySelector('.totalAmt').textContent.replace('₹', '')) - Number(document.querySelector('#given').value)),
     products: []
   }
   
   document.querySelectorAll('.content').forEach((tr, i)=> {
     obj.products.push({});
     obj.products[i].name = tr.querySelector('td:nth-child(1) input').value;
+    obj.products[i].formula = tr.querySelector('td:nth-child(1) #formula').textContent;
+    obj.products[i].exp = tr.querySelector('td:nth-child(1) #exp').textContent;
     obj.products[i].price = tr.querySelector('td:nth-child(2) input').value;
     obj.products[i].qty = tr.querySelector('td:nth-child(3) input').value;
     obj.products[i].discount = tr.querySelector('td:nth-child(4) input').value;
@@ -149,25 +180,20 @@ function submit() {
     method: 'POST',
     headers: { 'Content-Type': 'Application/json' },
     body: JSON.stringify(obj)
-  }).then(()=>{
+  })
+  .then((response)=> response.json())
+  .then((msg)=> {
+    if(msg.err) {
+      msgTag.textContent = msg.err;
+      msgTag.style.color = 'red';
+      return;
+    }
+    msgTag.textContent = msg.msg;
     document.querySelectorAll('.content').forEach((tr)=> {tr.remove()});
     document.querySelector('#username').value = '';
     document.querySelector('.totalAmt').textContent = '0';
     document.querySelector('#given').value = '0';
-
-    let p = document.createElement('p');
-    p.textContent = 'Send Successfully';
-    p.style.fontSize = '25px';
-    p.style.fontWeight = 'bold';
-    p.style.marginTop = '40px';
-    p.style.color = 'rgb(63, 199, 63)';
-    p.style.textAlign= 'center';
-    p.className = 'dataSendMsg';
-    document.querySelector('form').append(p);
     totalDiv();
-    setTimeout(()=> {
-      document.querySelector('form').querySelector('.dataSendMsg').remove();
-    }, 2000);
   }).catch((err)=> {
     console.log('error to upload [from catch()]');
   })

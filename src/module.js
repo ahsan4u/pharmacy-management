@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 
 const Bills = mongoose.model('bills', mongoose.Schema({
-    username:{type: String},
+    username:{type: String, default: 'unknown'},
     totalAmount: {type: String},
     pendingAmount: {type: String},
-    products: []
+    products: [],
 }));
 
 const expirationSchema = new mongoose.Schema({

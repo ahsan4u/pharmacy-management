@@ -38,7 +38,7 @@ router.route('/medicines/:type/:key').get( async (req, res)=> {
     const type = req.params.type;
     const key = req.params.key;
     if(key == 'empty') {
-        const data = await Medicines.find();
+        const data = await Medicines.find().sort({name: 1});
         res.json(medicineOBJ(data));    
     }
     else if(type == 'name') {
@@ -79,56 +79,87 @@ router.route('/medicine/update').post( async (req, res)=> {
     res.end();
 })
 
-//6 print Add Medicine page
+//7 print Add Medicine page
 router.route('/add-medicine').get((req, res)=> {
     res.render('add-medicine');
 });
 
 
-//7 print Add Sales Book page
+//8 print Add Sales Book page
 router.route('/sales-book').get((req, res)=> {
     res.render('sales-book');
 });
 
-//8 suggesion Search handler on Sale page
+//9 suggesion Search handler on Sale page
 router.route('/medicines/:key').get(async (req, res) => {
     const key = req.params.key;
     try {
         const data = await Medicines.find({ name: { $regex: key, $options: 'i' } }).limit(6);
-        res.json(data);
+        res.json(medicineOBJ(data));
     } catch (err) {
         res.status(500).send('Something went wrong on server page: '+err);
     }
 });
 
-//9 searched item adding in Bill
-router.route('/items/:key').get( async (req, res)=> {
-    let key = req.params.key;
+//10 searched item adding in Bill
+router.route('/print-item/search/:name/:formula/:exp').get( async (req, res)=> {
     try {
-        const data = await Medicines.findOne({ name: { $regex: key, $options: 'i' } });
-        res.json(data);
+        const body = {
+            name: req.params.name,
+            formula: req.params.formula,
+            exp: req.params.exp.replace('Exp: ', '').replaceAll('-', '/')
+        };
+        const data = await Medicines.findOne({ name: body.name, formula: body.formula });
+        const dateArr = data.date.find((item)=> body.exp == item.exp);
+        const obj = {...body, price: dateArr.price}
+        res.json(obj);
     } catch (err) {
         res.status(500).send('Something went wrong on server page: '+err);
     }   
 })
 
-//10 Upload Bill to database
+//11 Upload Bill to database
 router.route('/upload-bill').post( async (req, res)=> {
     try {
-        console.log(req.body);
-        await Bills.create({
-            username: req.body.username,
-            totalAmount: req.body.totalAmt,
-            pendingAmount: req.body.pendingAmount,
-            products: req.body.products
-        })
-        res.redirect('sale');
+        let log = '';
+        for (const product of req.body.products) {
+            const medicine = await Medicines.findOne({ name: product.name, formula: product.formula });
+            let NullQtyIdx = [];
+            medicine.date.forEach((date, idx) => {
+                if (date.exp == product.exp.replace('Exp: ', '')) {
+                    const qty = Number(date.qty) - Number(product.qty);
+                    
+                    if(qty == 0 && medicine.date.length > 1) {
+                        NullQtyIdx.push(idx);
+                    } else if (qty < 0) {
+                        log += `${product.name} has only ${date.qty} Quantity Available\n`;
+                        return;
+                    }
+                    medicine.date[idx].qty = String(qty);
+                }
+            });
+            if(log == ''){
+                NullQtyIdx.forEach((idx, i)=> {medicine.date.splice(idx+i, 1);});
+                await medicine.save();
+            }
+        }
+        if(log == '') {
+            await Bills.create({
+                username: req.body.username,
+                totalAmount: req.body.totalAmt,
+                pendingAmount: req.body.pendingAmount,
+                products: req.body.products
+            });
+            res.json({msg: 'Successfully Added to Database'});
+        } else {
+            res.json({err: log});
+        }
     } catch (error) {
-        res.status(500).send('Something went wrong on server page: '+err);
-    }
+        res.status(500).send('Something went wrong on server page: ' + error.message);
+    }    
 })
 
-//11 uploading new Medicine via Add Medicine Page
+//12 uploading new Medicine via Add Medicine Page  (Here adding need:> before adding delete the item qty=0 having same name & formula)
 router.route('/add-medicine').post(async (req, res)=> {
     try {
         const body = req.body;
